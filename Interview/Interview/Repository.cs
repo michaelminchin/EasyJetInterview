@@ -35,7 +35,15 @@ namespace Interview
 
         public void Save(T item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                items.Add(item);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
         }
     }
 }
