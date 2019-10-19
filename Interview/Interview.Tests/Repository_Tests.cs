@@ -1,5 +1,9 @@
 ﻿using System;
 using NUnit.Framework;
+using Moq;
+using Interview;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Interview.Tests
 {
@@ -10,7 +14,9 @@ namespace Interview.Tests
         public void StringRepository_SaveStorable_SetsCountToOne()
         {
             // Arrange
-            Repository<IStorable<string>, string> stringRepository = new Repository<IStorable<string>, string>();
+            Storeable<string> storeable = new Storeable<string>();
+            ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>();
 
 
             // Act
