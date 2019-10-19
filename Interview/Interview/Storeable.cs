@@ -9,5 +9,6 @@ namespace Interview
 {
     public class Storeable<T> : IStoreable<T>
     {
+        public T Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
