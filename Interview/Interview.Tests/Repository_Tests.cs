@@ -18,11 +18,11 @@ namespace Interview.Tests
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
             Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection);
 
-
             // Act
+            stringRepository.Save(storeable);
 
             // Assert
-
+            Assert.That(storeableCollection.Count == 1);
         }
     }
 }
