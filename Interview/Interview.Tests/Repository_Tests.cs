@@ -102,7 +102,7 @@ namespace Interview.Tests
             var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Delete(null));
 
             // Assert
-            Assert.That(ex.Message == "id cannot be null when calling Delete on repository");
+            Assert.That(ex.Message == "id cannot be null when calling Delete on repository\r\nParameter name: Delete");
         }
     }
 }

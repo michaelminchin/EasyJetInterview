@@ -22,6 +22,12 @@ namespace Interview
         {
             try
             {
+                if (id == null)
+                {
+                    logger.Log(LogLevel.Error, "id cannot be null when calling Delete on repository");
+                    throw new ArgumentNullException("Delete", "id cannot be null when calling Delete on repository");
+                }
+
                 foreach (var item in items)
                 {
                     if (item.Id.Equals(id))
@@ -32,13 +38,10 @@ namespace Interview
                     }
                 }
             }
-            catch (ArgumentNullException ane)
-            {
-                logger.Log(LogLevel.Error, "id cannot be null when calling Delete on repository", ane);
-            }
             catch (Exception e)
             {
                 logger.Log(LogLevel.Error, "Error calling Delete on repository", e);
+                throw;
             }
         }
 
