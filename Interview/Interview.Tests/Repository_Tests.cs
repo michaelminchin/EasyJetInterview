@@ -31,7 +31,6 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
-            IStoreable<string> storeable = new Storeable<string> { Id = "first" };
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
             Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
 
@@ -39,7 +38,7 @@ namespace Interview.Tests
             var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Save(null));
 
             // Assert
-            Assert.That(ex.Message == "item cannot be null when calling Save on repository\r\nParameter name: Delete");
+            Assert.That(ex.Message == "item cannot be null when calling Save on repository\r\nParameter name: Save");
         }
 
         [Test]

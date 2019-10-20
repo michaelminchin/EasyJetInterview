@@ -79,18 +79,15 @@ namespace Interview
         {
             try
             {
-                items.Add(item);
+                ValidateItemParameter(item, "Save");
+                SaveItem(item);
                 logger.LogInfo($"Item {item.Id} added to repository");
-            }
-            catch (ArgumentNullException ane)
-            {
-                //logger.Log(LogLevel.Error, "Item cannot be null when calling Save on repository", ane);
-                logger.LogError(ane);
+                        
             }
             catch (Exception e)
             {
-                //logger.Log(LogLevel.Error, "Error calling Save on repository", e);
                 logger.LogError(e);
+                throw;
             }
         }
 
@@ -139,6 +136,11 @@ namespace Interview
                 }
             }
             return false;
+        }
+
+        private void SaveItem(T item)
+        {
+            items.Add(item);
         }
     }
 }
