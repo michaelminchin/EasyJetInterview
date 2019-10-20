@@ -33,6 +33,7 @@ namespace Interview
                     RemoveItem(itemToDelete);
                     logger.LogInfo($"Item Id = {id} removed from items collection");
                 }
+                else validate.IdDoesntExist(id, "Delete", items);
             }
             catch (Exception e)
             {

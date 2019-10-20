@@ -67,5 +67,19 @@ namespace Interview
                 throw;
             }
         }
+
+        public void IdDoesntExist(I id, string methodName, ICollection<T> items)
+        {
+            try
+            {
+                logger.LogError(new ArgumentNullException(methodName, $"id does not exist in repository, when calling {methodName}"));
+                throw new ArgumentNullException(methodName, $"id does not exist in repository, when calling {methodName}");
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e);
+                throw;
+            }
+        }
     }
 }

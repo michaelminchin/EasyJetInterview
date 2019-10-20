@@ -13,5 +13,7 @@ namespace Interview
         void ValidateItemNull(T item, string methodName);
 
         void ValidateItemExists(T item, string methodName, ICollection<T> items);
+
+        void IdDoesntExist(I id, string methodName, ICollection<T> items);
     }
 }
