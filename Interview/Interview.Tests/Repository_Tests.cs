@@ -26,6 +26,14 @@ namespace Interview.Tests
             SetUpCommonObjects();
         }
 
+        private void SetUpOneStoreablePopulateCollection()
+        {
+            firstStoreable = new Storeable<string> { Id = "first" };
+            storeableCollection = new Collection<IStoreable<string>> { firstStoreable };
+
+            SetUpCommonObjects();
+        }
+
         private void SetUpTwoStoreables()
         {
             firstStoreable = new Storeable<string> { Id = "first" };
@@ -73,13 +81,23 @@ namespace Interview.Tests
         }
 
         [Test]
+        public void StringRepository_SaveStorable_AlreadyExistsThrowsException()
+        {
+            // Arrange
+            SetUpOneStoreablePopulateCollection();
+
+            // Act
+            var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Save(firstStoreable));
+
+            // Assert
+            Assert.That(ex.Message == "item cannot be null when calling Save on repository\r\nParameter name: Save");
+        }
+
+        [Test]
         public void StringRepository_GetStorable_ReturnsStoreable()
         {
             // Arrange
-            SetUpOneStoreable();
-            // special case
-            storeableCollection = new Collection<IStoreable<string>> { firstStoreable };
-            stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger, validate);
+            SetUpOneStoreablePopulateCollection();
 
             // Act
             var returnedObject = stringRepository.Get(firstStoreable.Id);
