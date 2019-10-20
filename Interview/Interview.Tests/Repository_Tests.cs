@@ -83,5 +83,26 @@ namespace Interview.Tests
             // Assert
             Assert.That(storeableCollection.Count == 1);
         }
+
+        [Test]
+        public void StringRepository_DeleteStorable_ThrowsArgumentNullException()
+        {
+            // Arrange
+            ILogger logger = new Logger();
+            IStoreable<string> firstStoreable = new Storeable<string> { Id = "first" };
+            IStoreable<string> secondStoreable = new Storeable<string> { Id = "second" };
+            ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>
+            {
+                firstStoreable,
+                secondStoreable
+            };
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+
+            // Act
+            var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Delete(null));
+
+            // Assert
+            Assert.That(ex.Message == "id cannot be null when calling Delete on repository");
+        }
     }
 }
