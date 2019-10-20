@@ -9,7 +9,7 @@ namespace Interview
 {
     public class Logger : ILogger
     {
-        public void Log(LogLevel logLevel, string description, Exception exception = null)
+        public void LogFatal(Exception exception)
         {
             // will log messages in future
         }
@@ -19,7 +19,22 @@ namespace Interview
             // will log messages in future
         }
 
+        public void LogWarn(string description)
+        {
+            // will log messages in future
+        }
+
         public void LogInfo(string description)
+        {
+            // will log messages in future
+        }
+
+        public void LogDebug(string description)
+        {
+            // will log messages in future
+        }
+
+        public void LogTrace(string description)
         {
             // will log messages in future
         }

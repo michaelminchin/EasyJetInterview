@@ -39,13 +39,13 @@ namespace Interview
             {
                 if (id == null)
                 {
-                    logger.Log(LogLevel.Error, $"id parameter cannot be null when calling {methodName}");
+                    logger.LogError(new ArgumentNullException(methodName, $"id parameter cannot be null when calling {methodName}"));
                     throw new ArgumentNullException(methodName, "id cannot be null when calling Delete on repository");
                 }
             }
             catch (Exception e)
             {
-                logger.Log(LogLevel.Error, "Error calling Validate", e);
+                logger.LogError(e);
                 throw;
             }
         }
@@ -79,12 +79,14 @@ namespace Interview
             }
             catch (ArgumentNullException ane)
             {
-                logger.Log(LogLevel.Error, "id cannot be null when calling Get on repository", ane);
+                //logger.Log(LogLevel.Error, "id cannot be null when calling Get on repository", ane);
+                logger.LogError(ane);
                 return default(T);
             }
             catch (Exception e)
             {
-                logger.Log(LogLevel.Error, "Error calling Get on repository", e);
+                //logger.Log(LogLevel.Error, "Error calling Get on repository", e);
+                logger.LogError(e);
                 return default(T);
             }
         }
@@ -97,7 +99,8 @@ namespace Interview
             }
             catch (Exception e)
             {
-                logger.Log(LogLevel.Error, "Error calling GetAll on repository", e);
+                //logger.Log(LogLevel.Error, "Error calling GetAll on repository", e);
+                logger.LogError(e);
                 return default(IEnumerable<T>);
             }
         }
@@ -107,15 +110,18 @@ namespace Interview
             try
             {
                 items.Add(item);
-                logger.Log(LogLevel.Error, $"Item {item.Id} added to repository");
+                //logger.Log(LogLevel.Error, $"Item {item.Id} added to repository");
+                logger.LogInfo($"Item {item.Id} added to repository");
             }
             catch (ArgumentNullException ane)
             {
-                logger.Log(LogLevel.Error, "Item cannot be null when calling Save on repository", ane);
+                //logger.Log(LogLevel.Error, "Item cannot be null when calling Save on repository", ane);
+                logger.LogError(ane);
             }
             catch (Exception e)
             {
-                logger.Log(LogLevel.Error, "Error calling Save on repository", e);
+                //logger.Log(LogLevel.Error, "Error calling Save on repository", e);
+                logger.LogError(e);
             }
         }
     }

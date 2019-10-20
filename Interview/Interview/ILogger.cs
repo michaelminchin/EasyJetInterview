@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 
 namespace Interview
 {
-    public enum LogLevel { Fatal, Error, Warning, Information, Debug, Trace }
-
     public interface ILogger
     {
-        void Log(LogLevel logLevel, string description, Exception exception = null);
+        void LogFatal(Exception exception);
 
         void LogError(Exception exception);
 
+        void LogWarn(string description);
+
         void LogInfo(string description);
+
+        void LogDebug(string description);
+
+        void LogTrace(string description);
     }
 }
