@@ -51,7 +51,15 @@ namespace Interview
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return items;
+            }
+            catch (Exception e)
+            {
+                logger.Log(LogLevel.Error, "Error calling GetAll on repository", e);
+                return default(IEnumerable<T>);
+            }
         }
 
         public void Save(T item)
