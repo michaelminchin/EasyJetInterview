@@ -41,5 +41,26 @@ namespace Interview.Tests
             // Assert
             Assert.IsTrue(returnedObject.GetType() == typeof(Storeable<string>));
         }
+
+        [Test]
+        public void StringRepository_GetAllStorable_SetsCountToTwo()
+        {
+            // Arrange
+            ILogger logger = new Logger();
+            IStoreable<string> firstStoreable = new Storeable<string> { Id = "first" };
+            IStoreable<string> secondStoreable = new Storeable<string> { Id = "second" };
+            ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>
+            {
+                firstStoreable,
+                secondStoreable
+            };
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+
+            // Act
+            stringRepository.GetAll();
+
+            // Assert
+            Assert.That(storeableCollection.Count == 2);
+        }
     }
 }
