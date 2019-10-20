@@ -20,11 +20,16 @@ namespace Interview
 
         public void Delete(I id)
         {
+            T itemToDelete;
+
             try
             {
                 ValidateIdParameter(id, "Delete");
-                if (FindAndRemoveItem(id))
-                        logger.LogInfo($"Item Id = {id} removed from items collection");
+                if (FindItem(id, out itemToDelete))
+                {
+                    RemoveItem(itemToDelete);
+                    logger.LogInfo($"Item Id = {id} removed from items collection");
+                }
             }
             catch (Exception e)
             {
@@ -35,29 +40,22 @@ namespace Interview
 
         public T Get(I id)
         {
+            T itemToReturn;
+
             try
             {
-                foreach (var item in items)
+                ValidateIdParameter(id, "Get");
+                if (FindItem(id, out itemToReturn))
                 {
-                    if (item.Id.Equals(id))
-                    {
-                        return item;
-                    }
+                    return itemToReturn;
                 }
 
                 return default(T);
             }
-            catch (ArgumentNullException ane)
-            {
-                //logger.Log(LogLevel.Error, "id cannot be null when calling Get on repository", ane);
-                logger.LogError(ane);
-                return default(T);
-            }
             catch (Exception e)
             {
-                //logger.Log(LogLevel.Error, "Error calling Get on repository", e);
                 logger.LogError(e);
-                return default(T);
+                throw;
             }
         }
 
@@ -69,7 +67,6 @@ namespace Interview
             }
             catch (Exception e)
             {
-                //logger.Log(LogLevel.Error, "Error calling GetAll on repository", e);
                 logger.LogError(e);
                 return default(IEnumerable<T>);
             }
@@ -125,17 +122,23 @@ namespace Interview
             }
         }
 
-        private bool FindAndRemoveItem(I id)
+        private bool FindItem(I id, out T returnItem)
         {
             foreach (var item in items)
             {
                 if (item.Id.Equals(id))
                 {
-                    items.Remove(item);
+                    returnItem = item;
                     return true;
                 }
             }
+            returnItem = default(T);
             return false;
+        }
+
+        private void RemoveItem(T item)
+        {
+            items.Remove(item);
         }
 
         private void SaveItem(T item)
