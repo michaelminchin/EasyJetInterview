@@ -14,6 +14,7 @@ namespace Interview.Tests
         public void StringRepository_SaveStorable_SetsCountToOne()
         {
             // Arrange
+            ILogger logger = new ILogger();
             Storeable<string> storeable = new Storeable<string> { Id = "first" };
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
             Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection);
