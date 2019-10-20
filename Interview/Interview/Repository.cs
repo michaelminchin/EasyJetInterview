@@ -20,7 +20,26 @@ namespace Interview
 
         public void Delete(I id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                foreach (var item in items)
+                {
+                    if (item.Id.Equals(id))
+                    {
+                        items.Remove(item);
+                        logger.Log(LogLevel.Information, $"Item Id = {id} removed from items collection");
+                        break;
+                    }
+                }
+            }
+            catch (ArgumentNullException ane)
+            {
+                logger.Log(LogLevel.Error, "id cannot be null when calling Delete on repository", ane);
+            }
+            catch (Exception e)
+            {
+                logger.Log(LogLevel.Error, "Error calling Delete on repository", e);
+            }
         }
 
         public T Get(I id)
