@@ -27,7 +27,7 @@ namespace Interview
 
             try
             {
-                validate.ValidateIdParameter(id, "Delete");
+                validate.ValidateIdNull(id, "Delete");
                 if (FindItem(id, out itemToDelete))
                 {
                     RemoveItem(itemToDelete);
@@ -47,7 +47,7 @@ namespace Interview
 
             try
             {
-                validate.ValidateIdParameter(id, "Get");
+                validate.ValidateIdNull(id, "Get");
                 if (FindItem(id, out itemToReturn))
                 {
                     return itemToReturn;
@@ -79,7 +79,9 @@ namespace Interview
         {
             try
             {
-                validate.ValidateItemParameter(item, "Save");
+                validate.ValidateItemNull(item, "Save");
+                validate.ValidateItemExists(item, "Save", items);
+
                 SaveItem(item);
                 logger.LogInfo($"Item {item.Id} added to repository");
                         

@@ -90,7 +90,7 @@ namespace Interview.Tests
             var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Save(firstStoreable));
 
             // Assert
-            Assert.That(ex.Message == "item cannot be null when calling Save on repository\r\nParameter name: Save");
+            Assert.That(ex.Message == "item already exists in repository, when calling Save\r\nParameter name: Save");
         }
 
         [Test]

@@ -17,7 +17,24 @@ namespace Interview
             this.logger = logger;
         }
 
-        public void ValidateIdParameter(I id, string methodName)
+        public void ValidateItemExists(T item, string methodName, ICollection<T> items)
+        {
+            try
+            {
+                if (items.Contains(item))
+                {
+                    logger.LogError(new ArgumentNullException(methodName, $"item already exists in repository, when calling {methodName}"));
+                    throw new ArgumentNullException(methodName, $"item already exists in repository, when calling {methodName}");
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e);
+                throw;
+            }
+        }
+
+        public void ValidateIdNull(I id, string methodName)
         {
             try
             {
@@ -34,7 +51,7 @@ namespace Interview
             }
         }
 
-        public void ValidateItemParameter(T item, string methodName)
+        public void ValidateItemNull(T item, string methodName)
         {
             try
             {

@@ -8,8 +8,10 @@ namespace Interview
 {
     public interface IValidate<T, I> where T : IStoreable<I>
     {
-        void ValidateIdParameter(I id, string methodName);
+        void ValidateIdNull(I id, string methodName);
 
-        void ValidateItemParameter(T item, string methodName);
+        void ValidateItemNull(T item, string methodName);
+
+        void ValidateItemExists(T item, string methodName, ICollection<T> items);
     }
 }
