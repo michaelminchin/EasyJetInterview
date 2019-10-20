@@ -33,36 +33,6 @@ namespace Interview
             }
         }
 
-        private void ValidateIdParameter(I id, string methodName)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    logger.LogError(new ArgumentNullException(methodName, $"id parameter cannot be null when calling {methodName}"));
-                    throw new ArgumentNullException(methodName, "id cannot be null when calling Delete on repository");
-                }
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e);
-                throw;
-            }
-        }
-
-        private bool FindAndRemoveItem(I id)
-        {
-            foreach (var item in items)
-            {
-                if (item.Id.Equals(id))
-                {
-                    items.Remove(item);
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public T Get(I id)
         {
             try
@@ -110,7 +80,6 @@ namespace Interview
             try
             {
                 items.Add(item);
-                //logger.Log(LogLevel.Error, $"Item {item.Id} added to repository");
                 logger.LogInfo($"Item {item.Id} added to repository");
             }
             catch (ArgumentNullException ane)
@@ -123,6 +92,53 @@ namespace Interview
                 //logger.Log(LogLevel.Error, "Error calling Save on repository", e);
                 logger.LogError(e);
             }
+        }
+
+        private void ValidateIdParameter(I id, string methodName)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    logger.LogError(new ArgumentNullException(methodName, $"id parameter cannot be null when calling {methodName}"));
+                    throw new ArgumentNullException(methodName, $"id cannot be null when calling {methodName} on repository");
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e);
+                throw;
+            }
+        }
+
+        private void ValidateItemParameter(T item, string methodName)
+        {
+            try
+            {
+                if (item == null)
+                {
+                    logger.LogError(new ArgumentNullException(methodName, $"item parameter cannot be null when calling {methodName}"));
+                    throw new ArgumentNullException(methodName, $"item cannot be null when calling {methodName} on repository");
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e);
+                throw;
+            }
+        }
+
+        private bool FindAndRemoveItem(I id)
+        {
+            foreach (var item in items)
+            {
+                if (item.Id.Equals(id))
+                {
+                    items.Remove(item);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
