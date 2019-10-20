@@ -157,5 +157,19 @@ namespace Interview.Tests
             // Assert
             Assert.That(ex.Message == "id cannot be null when calling Delete on repository\r\nParameter name: Delete");
         }
+
+        [Test]
+        public void StringRepository_DeleteStorable_DoesntExistThrowsException()
+        {
+            // Arrange
+            SetUpOneStoreable();
+            secondStoreable = new Storeable<string> { Id = "second" };
+
+            // Act
+            var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Delete(secondStoreable.Id));
+
+            // Assert
+            Assert.That(ex.Message == "id cannot be null when calling Delete on repository\r\nParameter name: Delete");
+        }
     }
 }
