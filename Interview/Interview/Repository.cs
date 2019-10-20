@@ -8,14 +8,17 @@ namespace Interview
     {
         private ICollection<T> items;
         private ILogger logger;
+        private IValidate<T, I> validate;
 
-        public Repository(ICollection<T> items, ILogger logger)
+        public Repository(ICollection<T> items, ILogger logger, IValidate<T, I> validate)
         {
             if (items == null) throw new ArgumentNullException("Items collection cannot be null");
+            if (logger == null) throw new ArgumentNullException("Logger cannot be null");
             if (logger == null) throw new ArgumentNullException("Logger cannot be null");
 
             this.items = items;
             this.logger = logger;
+            this.validate = validate;
         }
 
         public void Delete(I id)
@@ -24,7 +27,7 @@ namespace Interview
 
             try
             {
-                ValidateIdParameter(id, "Delete");
+                validate.ValidateIdParameter(id, "Delete");
                 if (FindItem(id, out itemToDelete))
                 {
                     RemoveItem(itemToDelete);
@@ -44,7 +47,7 @@ namespace Interview
 
             try
             {
-                ValidateIdParameter(id, "Get");
+                validate.ValidateIdParameter(id, "Get");
                 if (FindItem(id, out itemToReturn))
                 {
                     return itemToReturn;
@@ -76,44 +79,10 @@ namespace Interview
         {
             try
             {
-                ValidateItemParameter(item, "Save");
+                validate.ValidateItemParameter(item, "Save");
                 SaveItem(item);
                 logger.LogInfo($"Item {item.Id} added to repository");
                         
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e);
-                throw;
-            }
-        }
-
-        private void ValidateIdParameter(I id, string methodName)
-        {
-            try
-            {
-                if (id == null)
-                {
-                    logger.LogError(new ArgumentNullException(methodName, $"id parameter cannot be null when calling {methodName}"));
-                    throw new ArgumentNullException(methodName, $"id cannot be null when calling {methodName} on repository");
-                }
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e);
-                throw;
-            }
-        }
-
-        private void ValidateItemParameter(T item, string methodName)
-        {
-            try
-            {
-                if (item == null)
-                {
-                    logger.LogError(new ArgumentNullException(methodName, $"item parameter cannot be null when calling {methodName}"));
-                    throw new ArgumentNullException(methodName, $"item cannot be null when calling {methodName} on repository");
-                }
             }
             catch (Exception e)
             {

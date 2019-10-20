@@ -15,9 +15,10 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
+            IValidate<IStoreable<string>, string> validate = new Validate<IStoreable<string>, string>(logger);
             IStoreable<string> storeable = new Storeable<string> { Id = "first" };
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
-            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger, validate);
 
             // Act
             stringRepository.Save(storeable);
@@ -31,8 +32,9 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
+            IValidate<IStoreable<string>, string> validate = new Validate<IStoreable<string>, string>(logger);
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
-            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger, validate);
 
             // Act
             var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Save(null));
@@ -46,9 +48,10 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
+            IValidate<IStoreable<string>, string> validate = new Validate<IStoreable<string>, string>(logger);
             IStoreable<string> storeable = new Storeable<string> { Id = "first" };
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>> { storeable };
-            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger, validate);
 
             // Act
             var returnedObject = stringRepository.Get(storeable.Id);
@@ -62,8 +65,9 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
+            IValidate<IStoreable<string>, string> validate = new Validate<IStoreable<string>, string>(logger);
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
-            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger, validate);
 
             // Act
             var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Get(null));
@@ -77,6 +81,7 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
+            IValidate<IStoreable<string>, string> validate = new Validate<IStoreable<string>, string>(logger);
             IStoreable<string> firstStoreable = new Storeable<string> { Id = "first" };
             IStoreable<string> secondStoreable = new Storeable<string> { Id = "second" };
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>
@@ -84,7 +89,7 @@ namespace Interview.Tests
                 firstStoreable,
                 secondStoreable
             };
-            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger, validate);
 
             // Act
             stringRepository.GetAll();
@@ -98,6 +103,7 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
+            IValidate<IStoreable<string>, string> validate = new Validate<IStoreable<string>, string>(logger);
             IStoreable<string> firstStoreable = new Storeable<string> { Id = "first" };
             IStoreable<string> secondStoreable = new Storeable<string> { Id = "second" };
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>
@@ -105,7 +111,7 @@ namespace Interview.Tests
                 firstStoreable,
                 secondStoreable
             };
-            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger, validate);
 
             // Act
             stringRepository.Delete(secondStoreable.Id);
@@ -119,6 +125,7 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
+            IValidate<IStoreable<string>, string> validate = new Validate<IStoreable<string>, string>(logger);
             IStoreable<string> firstStoreable = new Storeable<string> { Id = "first" };
             IStoreable<string> secondStoreable = new Storeable<string> { Id = "second" };
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>
@@ -126,7 +133,7 @@ namespace Interview.Tests
                 firstStoreable,
                 secondStoreable
             };
-            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger, validate);
 
             // Act
             var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Delete(null));
