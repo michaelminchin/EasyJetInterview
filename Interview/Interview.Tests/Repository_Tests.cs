@@ -15,7 +15,7 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
-            Storeable<string> storeable = new Storeable<string> { Id = "first" };
+            IStoreable<string> storeable = new Storeable<string> { Id = "first" };
             ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
             Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
 
@@ -31,15 +31,15 @@ namespace Interview.Tests
         {
             // Arrange
             ILogger logger = new Logger();
-            Storeable<string> storeable = new Storeable<string> { Id = "first" };
-            ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
+            IStoreable<string> storeable = new Storeable<string> { Id = "first" };
+            ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>> { storeable };
             Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
 
             // Act
             var returnedObject = stringRepository.Get(storeable.Id);
 
             // Assert
-            Assert.IsTrue(returnedObject.GetType() == typeof(IStoreable<string>));
+            Assert.IsTrue(returnedObject.GetType() == typeof(Storeable<string>));
         }
     }
 }

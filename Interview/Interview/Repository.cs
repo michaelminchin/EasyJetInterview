@@ -25,7 +25,28 @@ namespace Interview
 
         public T Get(I id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                foreach (var item in items)
+                {
+                    if (item.Id.Equals(id))
+                    {
+                        return item;
+                    }
+                }
+
+                return default(T);
+            }
+            catch (ArgumentNullException ane)
+            {
+                logger.Log(LogLevel.Error, "id cannot be null when calling Get on repository", ane);
+                return default(T);
+            }
+            catch (Exception e)
+            {
+                logger.Log(LogLevel.Error, "Error calling Get on repository", e);
+                return default(T);
+            }
         }
 
         public IEnumerable<T> GetAll()
