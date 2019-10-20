@@ -22,27 +22,45 @@ namespace Interview
         {
             try
             {
+                ValidateIdParameter(id, "Delete");
+                if (FindAndRemoveItem(id))
+                        logger.LogInfo($"Item Id = {id} removed from items collection");
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e);
+                throw;
+            }
+        }
+
+        private void ValidateIdParameter(I id, string methodName)
+        {
+            try
+            {
                 if (id == null)
                 {
-                    logger.Log(LogLevel.Error, "id cannot be null when calling Delete on repository");
-                    throw new ArgumentNullException("Delete", "id cannot be null when calling Delete on repository");
-                }
-
-                foreach (var item in items)
-                {
-                    if (item.Id.Equals(id))
-                    {
-                        items.Remove(item);
-                        logger.Log(LogLevel.Information, $"Item Id = {id} removed from items collection");
-                        break;
-                    }
+                    logger.Log(LogLevel.Error, $"id parameter cannot be null when calling {methodName}");
+                    throw new ArgumentNullException(methodName, "id cannot be null when calling Delete on repository");
                 }
             }
             catch (Exception e)
             {
-                logger.Log(LogLevel.Error, "Error calling Delete on repository", e);
+                logger.Log(LogLevel.Error, "Error calling Validate", e);
                 throw;
             }
+        }
+
+        private bool FindAndRemoveItem(I id)
+        {
+            foreach (var item in items)
+            {
+                if (item.Id.Equals(id))
+                {
+                    items.Remove(item);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public T Get(I id)

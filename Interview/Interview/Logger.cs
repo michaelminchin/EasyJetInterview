@@ -11,7 +11,16 @@ namespace Interview
     {
         public void Log(LogLevel logLevel, string description, Exception exception = null)
         {
-            //throw new NotImplementedException();
+            // will log messages in future
+        }
+
+        public void LogError(Exception exception)
+        {
+            // will log messages in future
+        }
+
+        public void LogInfo(string description)
+        {
             // will log messages in future
         }
     }

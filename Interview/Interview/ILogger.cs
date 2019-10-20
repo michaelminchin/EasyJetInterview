@@ -11,5 +11,9 @@ namespace Interview
     public interface ILogger
     {
         void Log(LogLevel logLevel, string description, Exception exception = null);
+
+        void LogError(Exception exception);
+
+        void LogInfo(string description);
     }
 }
