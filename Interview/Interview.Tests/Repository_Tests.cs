@@ -58,6 +58,21 @@ namespace Interview.Tests
         }
 
         [Test]
+        public void StringRepository_GetStorable_ThrowsArgumentNullException()
+        {
+            // Arrange
+            ILogger logger = new Logger();
+            ICollection<IStoreable<string>> storeableCollection = new Collection<IStoreable<string>>();
+            Repository<IStoreable<string>, string> stringRepository = new Repository<IStoreable<string>, string>(storeableCollection, logger);
+
+            // Act
+            var ex = Assert.Throws<ArgumentNullException>(() => stringRepository.Get(null));
+
+            // Assert
+            Assert.That(ex.Message == "id cannot be null when calling Get on repository\r\nParameter name: Get");
+        }
+
+        [Test]
         public void StringRepository_GetAllStorable_SetsCountToTwo()
         {
             // Arrange
